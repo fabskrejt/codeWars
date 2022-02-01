@@ -24,20 +24,17 @@ PaginationHelper.prototype.pageItemCount = function(pageIndex) {
         return -1
     }
 
-
-    let a = pageIndex < this.pageCount() ? this.itemsPerPage : this.itemCount() - (this.itemsPerPage * (this.pageCount() -1))
-    return a
+    return pageIndex < this.pageCount() - 1 ? this.itemsPerPage : this.itemCount() - (this.itemsPerPage * (this.pageCount() -1))
 }
 
 // determines what page an item is on. Zero based indexes
 // this method should return -1 for itemIndex values that are out of range
 PaginationHelper.prototype.pageIndex = function(itemIndex) {
-    if(this.itemCount() === 0) return -1
-    if(itemIndex < 0 || itemIndex > this.pageCount()){
-        return -1
+    if(this.itemCount() === 0 || itemIndex < 0 || itemIndex > this.itemCount()) return -1
+    if(itemIndex === 0) {
+        return 0
     } else{
-        return Math.floor(itemIndex/this.itemCount())
+        return Math.ceil(itemIndex/this.itemsPerPage) - 1
     }
-
 }
 
